@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-
-
 export function EmployeeCreation() {
 
     const [nameInRussian, setNameInRussian] = useState('')
@@ -20,17 +18,22 @@ export function EmployeeCreation() {
     const history = useHistory()
 
     function handleSubmit(e: any) {
-        createEmployee({
-            id: Date.now(),
-            nameInRussian,
-            nameInEnglish,
-            nationalIdNumber,
-            birthDay,
-            jobTitle,
-            fullOrPartTime,
-            contractStartDate
-        })
-        history.push('/')
+        if (!nameInRussian || !nameInEnglish || !nationalIdNumber) {
+            alert('fill the fields')
+        }
+        else {
+            createEmployee({
+                id: Date.now(),
+                nameInRussian,
+                nameInEnglish,
+                nationalIdNumber,
+                birthDay,
+                jobTitle,
+                fullOrPartTime,
+                contractStartDate
+            })
+            history.push('/')
+        }
     }
 
     return <div>
@@ -92,14 +95,9 @@ export function EmployeeCreation() {
                 color="primary"
                 onClick={handleSubmit}>Create</Button>
         </FormElement>
-
     </div>
 }
-
-
 
 const FormElement = styled.div`
     margin-top: 20px
 `
-
-
