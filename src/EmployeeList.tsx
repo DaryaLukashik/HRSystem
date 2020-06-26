@@ -16,7 +16,10 @@ export function EmployeeList() {
 
     const history = useHistory()
 
-    function deleteEmployee(){}
+    const deleteEmployee = () => {
+        const y = document.getElementsByTagName("tr")[1];
+        // y.innerHTML = 'f ' + y.parentNode.nodeName;
+    }
 
     function handleSubmit(e: any) {
         history.push('/new-employee')
@@ -36,14 +39,12 @@ export function EmployeeList() {
             </TableHead>
             <TableBody>
                 {employees.map((employee) => (
-                    <TableRow key={employee.id}>
-                        <TableCell>
-                            {employee.nameInRussian}
-                        </TableCell>
+                    <TableRow key={employee.id} >
+                        <TableCell>{employee.nameInRussian}</TableCell>
                         <TableCell>{employee.nameInEnglish}</TableCell>
                         <TableCell>{employee.nationalIdNumber}</TableCell>
                         <TableCell>{employee.contractStartDate}</TableCell>
-                        <TableCell><DeleteIcon onClick={()=>{console.log('test')}}></DeleteIcon></TableCell>
+                        <TableCell><DeleteIcon cursor="pointer" onClick={deleteEmployee}></DeleteIcon></TableCell>
                     </TableRow>
                 ))}
             </TableBody>

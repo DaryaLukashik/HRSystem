@@ -18,8 +18,8 @@ export function EmployeeCreation() {
     const history = useHistory()
 
     function handleSubmit(e: any) {
-        if (!nameInRussian || !nameInEnglish || !nationalIdNumber) {
-            alert('fill the fields')
+        if (!nameInRussian || !contractStartDate) {
+            alert('Check the fields!')
         }
         else {
             createEmployee({
