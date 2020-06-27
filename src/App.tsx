@@ -7,7 +7,7 @@ interface Row {
   nameRU: string;
   nameEN: string;
   nationalIdNumber: number;
-  contractStartDate: any;
+  contractStartDate: Date;
 }
 
 interface TableState {
@@ -31,12 +31,12 @@ const App: React.FC = () => {
       },
     ],
     data: [
-      { nameRU: 'Дарья', nameEN: 'Darya', nationalIdNumber: 86756453, contractStartDate: '15.06.2020' },
+      { nameRU: 'Дарья', nameEN: 'Darya', nationalIdNumber: 86756453, contractStartDate: new Date(2020, 6, 25) },
       {
         nameRU: 'Назар',
         nameEN: 'Nazar',
         nationalIdNumber: 103032,
-        contractStartDate: '26.06.2020',
+        contractStartDate: new Date(2020, 6, 26)
       },
     ],
   });
@@ -51,11 +51,15 @@ const App: React.FC = () => {
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
+              //Add validation to form (nameEN)
+              if (newData.nameEN) {
+                setState((prevState) => {
+                  const data = [...prevState.data];
+                  data.push(newData);
+                  return { ...prevState, data };
+                });
+              }
+              
             }, 600);
           }),
         onRowUpdate: (newData, oldData) =>
