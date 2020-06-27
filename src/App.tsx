@@ -1,108 +1,96 @@
+import React from 'react';
+import MaterialTable, { Column } from 'material-table';
 
-import * as React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-import { EmployeeCreation } from './EmployeeCreation';
 
-interface IState{
-    employeeInformation: employeeInformation;
-    employees: Array<IEmployee>;
+
+interface Row {
+  nameRU: string;
+  nameEN: string;
+  nationalIdNumber: number;
+  contractStartDate: any;
 }
 
-interface employeeInformation{
-    nameInRussian: string
-    nameInEnglish: string
-    startContract: string
+interface TableState {
+  columns: Array<Column<Row>>;
+  data: Row[];
 }
 
-interface IEmployee{
-    id: number
-    value: employeeInformation
-    completed: boolean
+/*
+ React.FC обозначает явный тип для этой функции (хранится в React FC = function component) она проверяет возвращается ли jsx разметка
+*/
+const App: React.FC = () => {
+  const [state, setState] = React.useState<TableState>({
+    columns: [
+      { title: 'Name in Russian', field: 'nameRU' },
+      { title: 'Name in English', field: 'nameEN' },
+      { title: 'National ID Number', field: 'nationalIdNumber', type: 'numeric' },
+      {
+        title: 'Contract Start Date',
+        field: 'contractStartDate',
+        type: ('date')
+      },
+    ],
+    data: [
+      { nameRU: 'Дарья', nameEN: 'Darya', nationalIdNumber: 86756453, contractStartDate: '15.06.2020' },
+      {
+        nameRU: 'Назар',
+        nameEN: 'Nazar',
+        nationalIdNumber: 103032,
+        contractStartDate: '26.06.2020',
+      },
+    ],
+  });
+
+  return (
+    <MaterialTable
+      title="HR System v2.0"
+      columns={state.columns}
+      data={state.data}
+      editable={{
+        onRowAdd: (newData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              setState((prevState) => {
+                const data = [...prevState.data];
+                data.push(newData);
+                return { ...prevState, data };
+              });
+            }, 600);
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              if (oldData) {
+                setState((prevState) => {
+                  const data = [...prevState.data];
+                  data[data.indexOf(oldData)] = newData;
+                  return { ...prevState, data };
+                });
+              }
+            }, 600);
+          }),
+        onRowDelete: (oldData) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              resolve();
+              setState((prevState) => {
+                const data = [...prevState.data];
+                data.splice(data.indexOf(oldData), 1);
+                return { ...prevState, data };
+              });
+            }, 600);
+          }),
+      }}
+    />
+  );
+
 }
 
-const initializationEmployee = {
-    nameInRussian: "",
-    nameInEnglish: "",
-    startContract: "2020-04-01"
-
-}
+export default App;
 
 
-export class App extends React.Component<{}, IState> {
-    
-    constructor(props:{}){
-        super(props);
-
-        this.state = {
-            employeeInformation: initializationEmployee,
-            employees: []
-        };
-    }
-    
-
-    deleteTask(id: number): void{
-        const filterdEmployee: Array<IEmployee> = this.state.employees.filter((employee: IEmployee) => employee.id !== id)
-        this.setState({employees: filterdEmployee})
-    }
-    renderListEmployees(): JSX.Element[]{
-        return this.state.employees.map(
-            (employee: IEmployee, index: number) => {
-                return (
-                <div key= {employee.id}>
-                    <span style={{marginRight: 10}}>{employee.value.nameInRussian}</span>
-                    <span style={{marginRight: 10}}>{employee.value.nameInEnglish}</span>
-                    <span style={{marginRight: 10}}>{employee.value.startContract}</span>
-                    <button onClick={() => this.deleteTask(employee.id)}>Delete</button>
-                </div>
-                )
-        })
-    }
-
-    // sortingElementsByRussianName(array: Array<IEmployee>): void{
-    //     const sortedEmployees: Array<IEmployee> = this.state.employees.sort(
-    //         (a, b)=>(a.value.nameInRussian < b.value.nameInRussian) ? 1 : -1 
-    //         )
-    //     this.setState({employees: sortedEmployees})
-    // }
-
-    // sortingElementsByEnglishName(array: Array<IEmployee>): void{
-    //     const sortedEmployees: Array<IEmployee> = this.state.employees.sort(
-    //         (a, b)=>(a.value.nameInEnglish > b.value.nameInEnglish) ? 1 : -1 
-    //         )
-    //     this.setState({employees: sortedEmployees})
-    // }
-
-    // sortingElementsByStartContractDate(array: Array<IEmployee>): void{
-    //     const sortedEmployees: Array<IEmployee> = this.state.employees.sort(
-    //         (a, b)=>(a.value.nameInEnglish > b.value.nameInEnglish) ? 1 : -1 
-    //         )
-    //     this.setState({employees: sortedEmployees})
-    // }
-
-    render(): JSX.Element {
-        console.log(this.state)
-        const AddButton = {
-            backgroundColor: "lightblue"
-        }
-        return (
-           
-            <div>
-                <h1>Information about employee</h1>
-                
-                {/* <button onClick={()=>this.sortingElementsByRussianName(this.state.employees)}>Sort by RussianName</button>
-                <button onClick={()=>this.sortingElementsByEnglishName(this.state.employees)}>Sort by EnglishName</button>
-                <button onClick={()=>this.sortingElementsByStartContractDate(this.state.employees)}>Sort by StartContractDate</button>
-                <section>{ this.renderListEmployees() }</section> */}
-            </div>
-            );
-    }
-
- 
-}
+//______________________
 
  
