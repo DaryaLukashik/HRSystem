@@ -30,7 +30,8 @@ export function EmployeeCreation() {
                 birthDay,
                 jobTitle,
                 fullOrPartTime,
-                contractStartDate
+                contractStartDate,
+                dismissal: false
             })
             history.push('/')
         }
