@@ -9,27 +9,35 @@ import TableRow from '@material-ui/core/TableRow';
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router";
 import DeleteIcon from '@material-ui/icons/Delete';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
+
 
 
 
 
 export function EmployeeList() {
 
-    const history = useHistory()
-
-    function deleteEmployee(employee: Employee){
-        let firedEmployee = employee
-        firedEmployee.dismissal = true
-        fireEmployee(firedEmployee)
-    }
-
     function handleSubmit(e: any) {
         history.push('/new-employee')
     }
-
-    const employees = useStore(employeeList).filter(employee => employee.dismissal === false)
+    function showFireEmployee(){}
     
+    const employees = useStore(employeeList).filter(employee => employee.dismissal === false)
+
+    const history = useHistory()
+
     return <div>
+        <FormControlLabel
+          value="top"
+          control={
+          <Checkbox 
+          color="primary" 
+          onChange={()=>console.log('test')}/>
+        }
+          label="Top"
+          labelPlacement="end"
+        />
         <Table aria-label="customized table">
             <TableHead>
                 <TableRow>
@@ -47,7 +55,7 @@ export function EmployeeList() {
                          <TableCell>{employee.nameInEnglish}</TableCell>
                          <TableCell>{employee.nationalIdNumber}</TableCell>
                         <TableCell>{employee.contractStartDate}</TableCell>
-                         <TableCell><DeleteIcon onClick={()=>{deleteEmployee(employee)}}></DeleteIcon></TableCell>
+                         <TableCell><DeleteIcon onClick={()=>{fireEmployee(employee.id)}}></DeleteIcon></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -56,5 +64,6 @@ export function EmployeeList() {
             variant="outlined"
             color="primary"
             onClick={handleSubmit}>Add new employee</Button>
+        
     </div>
 }

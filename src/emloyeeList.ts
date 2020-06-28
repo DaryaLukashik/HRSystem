@@ -1,7 +1,7 @@
 import { createStore, createEvent } from "effector"
 
 export const createEmployee = createEvent<any>()
-export const fireEmployee = createEvent<any>()
+export const fireEmployee = createEvent<number>()
 
 export type Employee = {
     id: number,
@@ -43,5 +43,19 @@ export const employeeList = createStore([{
     firedDate: ""
 
 }])
+
 employeeList.on(createEmployee, (employeeList, employee)=>[...employeeList, employee])
-employeeList.on(fireEmployee, (employeeList, employee)=>[...employeeList, employee])
+
+employeeList.on(fireEmployee, (employeeList, employeeId) => employeeList.map(employee => {
+    if (employee.id === employeeId) {
+        return makeEmployeeFired(employee)
+    }
+    return employee
+}))
+
+function makeEmployeeFired(employee: Employee): Employee {
+    return {
+        ...employee,
+        dismissal: true,
+    }
+}
