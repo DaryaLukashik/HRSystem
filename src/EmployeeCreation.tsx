@@ -5,6 +5,7 @@ import { createEmployee } from './emloyeeList';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { InputLabel } from '@material-ui/core';
 
 export function EmployeeCreation() {
 
@@ -74,6 +75,7 @@ export function EmployeeCreation() {
                 onChange={e => setFullOrPartTime(e.target.value)} />
         </FormElement>
         <FormElement>
+            <InputLabel>BirthDay</InputLabel>
             <TextField
                 type="date"
                 variant="outlined"
@@ -81,6 +83,7 @@ export function EmployeeCreation() {
                 onChange={e => setBirthDay(e.target.value)} />
         </FormElement>
         <FormElement>
+        <InputLabel>Contract Start date</InputLabel>
             <TextField
                 type="date"
                 variant="outlined"
