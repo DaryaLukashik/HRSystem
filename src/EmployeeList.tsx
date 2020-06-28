@@ -1,5 +1,5 @@
 import { useStore } from "effector-react"
-import { employeeList } from "./emloyeeList"
+import { employeeList, Employee, fireEmployee } from "./emloyeeList"
 import * as React from "react"
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,17 +12,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 
+
 export function EmployeeList() {
 
     const history = useHistory()
 
-    function deleteEmployee(){}
+    function deleteEmployee(employee: Employee){
+        let firedEmployee = employee
+        firedEmployee.dismissal = true
+        fireEmployee(firedEmployee)
+    }
 
     function handleSubmit(e: any) {
         history.push('/new-employee')
     }
 
-    const employees = useStore(employeeList)
+    const employees = useStore(employeeList).filter(employee => employee.dismissal === false)
+    
     return <div>
         <Table aria-label="customized table">
             <TableHead>
@@ -35,15 +41,13 @@ export function EmployeeList() {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {employees.map((employee) => (
-                    <TableRow key={employee.id}>
-                        <TableCell>
-                            {employee.nameInRussian}
-                        </TableCell>
-                        <TableCell>{employee.nameInEnglish}</TableCell>
-                        <TableCell>{employee.nationalIdNumber}</TableCell>
+                { employees.map((employee) => (
+                     <TableRow key={employee.id}>
+                         <TableCell>{employee.nameInRussian}</TableCell>
+                         <TableCell>{employee.nameInEnglish}</TableCell>
+                         <TableCell>{employee.nationalIdNumber}</TableCell>
                         <TableCell>{employee.contractStartDate}</TableCell>
-                        <TableCell><DeleteIcon onClick={()=>{console.log('test')}}></DeleteIcon></TableCell>
+                         <TableCell><DeleteIcon onClick={()=>{deleteEmployee(employee)}}></DeleteIcon></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
