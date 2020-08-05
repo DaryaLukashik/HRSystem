@@ -10,7 +10,7 @@ export type Employee = {
     nationalIdNumber: string,
     birthDay: string,
     jobTitle: string,
-    fullOrPartTime: string, 
+    fullOrPartTime: string,
     contractStartDate: string,
     dismissal: boolean,
     firedDate: string
@@ -24,7 +24,7 @@ export const employeeList = createStore([{
     nationalIdNumber: "4130794",
     birthDay: "2020-04-01",
     jobTitle: "QA Engineer",
-    fullOrPartTime: "full", 
+    fullOrPartTime: "full",
     contractStartDate: "2020-04-01",
     dismissal: false,
     firedDate: ""
@@ -37,14 +37,27 @@ export const employeeList = createStore([{
     nationalIdNumber: "4130794",
     birthDay: "2020-04-01",
     jobTitle: "QA Engineer",
-    fullOrPartTime: "full", 
+    fullOrPartTime: "full",
     contractStartDate: "2020-04-01",
     dismissal: false,
     firedDate: ""
 
+},
+{
+    id: 3,
+    nameInRussian: "Darya3",
+    nameInEnglish: "Darya2",
+    nationalIdNumber: "4130794",
+    birthDay: "2020-04-01",
+    jobTitle: "QA Engineer",
+    fullOrPartTime: "full",
+    contractStartDate: "2020-04-01",
+    dismissal: true,
+    firedDate: ""
+
 }])
 
-employeeList.on(createEmployee, (employeeList, employee)=>[...employeeList, employee])
+employeeList.on(createEmployee, (employeeList, employee) => [...employeeList, employee])
 
 employeeList.on(fireEmployee, (employeeList, employeeId) => employeeList.map(employee => {
     if (employee.id === employeeId) {
