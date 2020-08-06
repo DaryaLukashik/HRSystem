@@ -1,5 +1,5 @@
 import { useStore } from "effector-react"
-import { employeeList, Employee, fireEmployee } from "./emloyeeList"
+import { employeeList, Employee, fireEmployee } from './emloyeeList';
 import * as React from "react"
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,32 +11,28 @@ import { useHistory } from "react-router";
 import DeleteIcon from '@material-ui/icons/Delete';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
-
-
-
-
+import { useState } from 'react';
 
 export function EmployeeList() {
+
+    const history = useHistory()
 
     function handleSubmit(e: any) {
         history.push('/new-employee')
     }
-    function showFireEmployee(){}
-    
-    const employees = useStore(employeeList).filter(employee => employee.dismissal === false)
 
-    const history = useHistory()
+    const [displayedExEmployees, setDisplayedExEmployees] = useState(false);
+    const employees = useStore(employeeList).filter(employee => employee.dismissal === displayedExEmployees)
 
     return <div>
         <FormControlLabel
-          value="top"
-          control={
-          <Checkbox 
-          color="primary" 
-          onChange={()=>console.log('test')}/>
-        }
-          label="Top"
-          labelPlacement="end"
+            control={
+                <Checkbox
+                    color="primary"
+                    onChange={(e) => { setDisplayedExEmployees(e.target.checked) }} />
+            }
+            label="Ex-employees"
+            labelPlacement="end"
         />
         <Table aria-label="customized table">
             <TableHead>
@@ -49,13 +45,13 @@ export function EmployeeList() {
                 </TableRow>
             </TableHead>
             <TableBody>
-                { employees.map((employee) => (
-                     <TableRow key={employee.id}>
-                         <TableCell>{employee.nameInRussian}</TableCell>
-                         <TableCell>{employee.nameInEnglish}</TableCell>
-                         <TableCell>{employee.nationalIdNumber}</TableCell>
+                {employees.map((employee) => (
+                    <TableRow key={employee.id}>
+                        <TableCell>{employee.nameInRussian}</TableCell>
+                        <TableCell>{employee.nameInEnglish}</TableCell>
+                        <TableCell>{employee.nationalIdNumber}</TableCell>
                         <TableCell>{employee.contractStartDate}</TableCell>
-                         <TableCell><DeleteIcon onClick={()=>{fireEmployee(employee.id)}}></DeleteIcon></TableCell>
+                        <TableCell><DeleteIcon onClick={() => { fireEmployee(employee.id) }}></DeleteIcon></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -64,6 +60,6 @@ export function EmployeeList() {
             variant="outlined"
             color="primary"
             onClick={handleSubmit}>Add new employee</Button>
-        
+
     </div>
 }
