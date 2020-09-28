@@ -1,5 +1,5 @@
 import { useStore } from 'effector-react'
-import { employeeList, tableHeadersName } from './emloyeeList'
+import { employeeList, tableHeaderNames } from './emloyeeList'
 import * as React from 'react'
 import { Button } from '@material-ui/core'
 import { useHistory } from 'react-router'
@@ -7,6 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import { useState } from 'react'
 import { EmployeeListTable } from './EmployeeListTable'
+import { EnhancedTable } from './test'
 
 export function EmployeeList() {
     const history = useHistory()
@@ -16,10 +17,8 @@ export function EmployeeList() {
     }
 
     const [displayedExEmployees, setDisplayedExEmployees] = useState(false)
-    const employees = useStore(employeeList).filter(
-        (employee) => employee.dismissal === displayedExEmployees
-    )
-    const headerNames = useStore(tableHeadersName)
+    const employees = useStore(employeeList).filter((employee) => employee.dismissal === displayedExEmployees)
+    const headerNames = useStore(tableHeaderNames)
     return (
         <div>
             <FormControlLabel
@@ -34,7 +33,8 @@ export function EmployeeList() {
                 label="Ex-employees"
                 labelPlacement="end"
             />
-            <EmployeeListTable employees={employees} headerNames={headerNames} />
+            {/* <EmployeeListTable employees={employees} headerNames={headerNames} /> */}
+            <EnhancedTable employees={employees} headerNames={headerNames} />
             <Button variant="outlined" color="primary" onClick={handleSubmit}>
                 Add new employee
             </Button>

@@ -5,5 +5,4 @@ import Routes from './Routes'
 import EnhancedTable from './test'
 
 var mountNode = document.getElementById('app')
-// ReactDOM.render(<EnhancedTable />, mountNode)
 ReactDOM.render(<Routes />, mountNode)

@@ -15,7 +15,10 @@ export type Employee = {
     dismissal: boolean
     firedDate: string
 }
-
+interface HeadCell {
+    id: string
+    label: string
+}
 const employeeListData: Employee[] = [
     {
         id: 1,
@@ -54,17 +57,17 @@ const employeeListData: Employee[] = [
         firedDate: '',
     },
 ]
-
-export const tableHeadersName = createStore([
-    'Name in Russian',
-    'Name in English',
-    'National ID number',
-    'Birth day',
-    'Job',
-    'Part time',
-    'Contract tart date',
-    'Fired date',
-])
+export const headCells: HeadCell[] = [
+    { id: 'nameInRussian', label: 'Name in Russian' },
+    { id: 'nameInEnglish', label: 'Name in English' },
+    { id: 'nationalIdNumber', label: 'National ID number' },
+    { id: 'birthDay', label: 'Birth day' },
+    { id: 'jobTitle', label: 'Job' },
+    { id: 'fullOrPartTime', label: 'Part time' },
+    { id: 'contractStartDate', label: 'Contract tart date' },
+    { id: 'firedDate', label: 'Fired date' },
+]
+export const tableHeaderNames = createStore(headCells)
 export const employeeList = createStore(employeeListData)
 
 employeeList.on(createEmployee, (employeeList, employee) => [...employeeList, employee])
