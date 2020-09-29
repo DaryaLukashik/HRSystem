@@ -7,7 +7,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import { useState } from 'react'
 import { EmployeeListTable } from './EmployeeListTable'
-import { EnhancedTable } from './test'
 
 export function EmployeeList() {
     const history = useHistory()
@@ -33,8 +32,7 @@ export function EmployeeList() {
                 label="Ex-employees"
                 labelPlacement="end"
             />
-            {/* <EmployeeListTable employees={employees} headerNames={headerNames} /> */}
-            <EnhancedTable employees={employees} headerNames={headerNames} />
+            <EmployeeListTable employees={employees} headerNames={headerNames} />
             <Button variant="outlined" color="primary" onClick={handleSubmit}>
                 Add new employee
             </Button>
